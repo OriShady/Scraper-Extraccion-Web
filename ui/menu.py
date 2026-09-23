@@ -17,10 +17,19 @@ def mostrar_menu():
 
 def obtener_seleccion():
     while True:
-        opcion = input("Elige una opción (0-9): ").strip()
-        if opcion.isdigit() and 0 <= int(opcion) <= 9:
-            return int(opcion)
-        print("Error: Por favor ingresa un número válido entre 0 y 9.")
+        opcion = input("Elige una o varias opciones separadas por coma (ej. 1,3,5) o 9 para TODO: ").strip()
+        if not opcion:
+            continue
+            
+        try:
+            # Convierte la entrada "1, 3" en una lista de enteros: [1, 3]
+            selecciones = [int(x.strip()) for x in opcion.split(',')]
+            if all(0 <= x <= 9 for x in selecciones):
+                return selecciones
+        except ValueError:
+            pass
+            
+        print("Error: Ingresa números válidos entre 0 y 9, separados por comas.")
 
 def solicitar_url():
     url = input("\nIntroduce la URL de la página web (ej. https://books.toscrape.com/): ").strip()
